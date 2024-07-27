@@ -72,8 +72,6 @@ namespace excel_c_
             using (var package = new ExcelPackage(new FileInfo(summaryFilePath)))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-
-                // 假设我们要读取第一行第一列的值  
                 if (worksheet.Dimension.Address != null)
                 {
                     col2 = worksheet.Dimension.End.Column;
@@ -88,7 +86,11 @@ namespace excel_c_
                             cellValue = worksheet.Cells[row, col].Value?.ToString();
 
                             ID = LookUpDdic(ddicFilePath, header_initiative, cellValue);
-                            //Console.Write($"单元格的值是: {cellValue}");
+
+                            Console.Write(header_initiative);
+                            Console.Write($"({row},{col})");
+                            Console.Write($"单元格的值是: {cellValue}  ");
+                            Console.WriteLine($"ID为 {ID}");
 
                             //写进去
                             for (int j = 1; j <= col2; j++)
@@ -101,11 +103,13 @@ namespace excel_c_
                                         if (!string.IsNullOrEmpty(cellValue) && (double.TryParse(cellValue, out doubleValue) && doubleValue != 0))//不等于空并且不等于0就写入1
                                         {
                                             worksheet.Cells[row, j].Value = 1;
+                                            Console.WriteLine("写入 1");
                                             break;
                                         }
                                         else
                                         {
                                             worksheet.Cells[row, j].Value = 0;
+                                            Console.WriteLine("写入 0");
                                             break;
                                         }
                                     }
