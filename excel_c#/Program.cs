@@ -24,14 +24,21 @@ namespace excel_c_
             openFileDialog.Filter = "Excel文件 (*.xlsx;*.xls)|*.xlsx;*.xls|All files (*.*)|*.*";
             summaryFilePath = booleanPathed(openFileDialog);
 
+            if (summaryFilePath.Equals("err"))
+            {
+                MessageBox.Show("操作错误！", "请从新打开软件");
+                Environment.Exit(0);
+            }
+
             OpenFileDialog openFileDialogDDIC = new OpenFileDialog();
             openFileDialogDDIC.Title = "选择字典表的Excel文件";
             openFileDialogDDIC.Filter = "Excel文件 (*.xlsx;*.xls)|*.xlsx;*.xls|All files (*.*)|*.*";
             ddicFilePath = booleanPathed(openFileDialogDDIC);
 
-            if (summaryFilePath.Equals("err") || ddicFilePath.Equals("err"))
+            if (ddicFilePath.Equals("err"))
             {
-                return;
+                MessageBox.Show("操作错误！", "请从新打开软件");
+                Environment.Exit(0);
             }
 
             MatchingAssignment(summaryFilePath, ddicFilePath);
@@ -64,7 +71,6 @@ namespace excel_c_
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 设置许可证上下文为非商业  
             using (var package = new ExcelPackage(new FileInfo(summaryFilePath)))
             {
-                // 获取第一个工作表（索引从0开始）  
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
 
                 // 假设我们要读取第一行第一列的值  
