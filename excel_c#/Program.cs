@@ -8,7 +8,6 @@ namespace excel_c_
 {
     internal class Program
     {
-
         public static string summaryFilePath;
         public static string ddicFilePath;
         public static string header_initiative;
@@ -113,6 +112,10 @@ namespace excel_c_
                                             break;
                                         }
                                     }
+                                }
+                                else if (ID.Equals("nohaveID"))     //字典里没有对应ID的话直接下一个
+                                {
+                                    break;
                                 }
 
                             }
